@@ -10,6 +10,8 @@
 #include <sstream>
 #include <vector>
 #include <iterator>
+#include <iomanip>
+#include <string.h>
 
 #include <chrono>
 
@@ -37,8 +39,58 @@ std::vector<std::string> split(const std::string& s, char delim) {
 	return elems;
 }
 
+std::string to_string(double x, uint8_t prec)
+{
+	std::ostringstream ss;
+	ss << std::setprecision(prec) << x;
+	return ss.str();
+}
+
+
+int set_motor_torque(HANDLE handle, double torque) {
+	std::cout << std::to_string(1) << std::endl;
+	//char t[] = "c";
+	//char tor[4];
+	//std::strncpy(tor, std::to_string(torque).c_str(),4);
+	constexpr uint8_t prec = 5;
+	char c[100];
+	//std::string cstr2 = c;
+	std::string cstr = "c 0 " + to_string(torque, prec) + "\n";
+	/*std::cout << "String length: " << cstr.length() << std::endl;
+	std::cout << "String: " << cstr << std::endl;
+	std::cout << "String length: " << cstr2.length() << std::endl;*/
+	//std::cout << cstr2 << std::endl;
+	//strncpy_s(c, sizeof(cstr), to_string(torque, prec).c_str(), sizeof(cstr));
+	//strcopy(c, cstr);
+	strncpy_s(c, sizeof(c), cstr.c_str(), sizeof(cstr));
+	std::cout << c << std::endl;
+	com_write_ln(handle, c);
+	//char c[] = std::strcat((char*)"c", *);
+	return 1;
+}
+
+int set_axis_state(HANDLE handle, int ax_state) {
+	char c[100];
+	uint8_t prec = 1;
+	std::string cstr = "w axis0.requested_state " + to_string(ax_state, prec) + "\n";
+	strncpy_s(c, sizeof(c), cstr.c_str(), sizeof(cstr));
+	std::cout << c << std::endl;
+	com_write_ln(handle, c);
+	return 1;
+}
+
 
 int main() {
+	int init_suc2 = com_init(handles, odrv_ports);
+	for (uint8_t i = 0; i < 4; i++) {
+		set_axis_state(handles[i], 1);
+		//set_motor_torque(handles[i], 0.2);
+	}
+	
+	system("pause");
+	return 0;
+
+
 	//std::string port = "\\\\.\\COM1";
 	//LPCSTR port = "\\\\.\\COM4";
 	//HANDLE handle = CreateFileA(port, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -127,7 +179,7 @@ int main() {
 			}
 			
 			//printf("Response from odrive%u: ", i);
-			//std::string resS = all_results[i].res;
+			//std::string resS = all_results[i].res;q
 			//std::cout << resS << std::endl;
 			//std::cout << resS.substr(0, resS.find("\n")) << std::endl;
 			//csplit = strtok(res, " \n");
