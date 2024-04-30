@@ -1,0 +1,7 @@
+﻿main.obj : error LNK2005: "char const * const odrv0_port" (?odrv0_port@@3PEBDEB) already defined in communication.obj
+main.obj : error LNK2005: "char const * const odrv1_port" (?odrv1_port@@3PEBDEB) already defined in communication.obj
+main.obj : error LNK2005: "char const * const odrv2_port" (?odrv2_port@@3PEBDEB) already defined in communication.obj
+main.obj : error LNK2005: "char const * const odrv3_port" (?odrv3_port@@3PEBDEB) already defined in communication.obj
+main.obj : error LNK2005: "void * * handles" (?handles@@3PAPEAXA) already defined in communication.obj
+main.obj : error LNK2005: "char const * * odrv_ports" (?odrv_ports@@3PAPEBDA) already defined in communication.obj
+C:\Users\solvno\source\repos\usbtest\x64\Debug\usbtest.exe : fatal error LNK1169: one or more multiply defined symbols found
